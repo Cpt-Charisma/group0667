@@ -11,12 +11,12 @@
 
 let keywords = ["10 самых популярных шрифтов от Google", "Отключение редакций и ревизий в WordPress", "Вывод произвольных типов записей и полей в WordPress", "Взаимодействие PHP и MySQL. Подключение к базе данных MySQL"];
 let keyword = keywords[getRandom(0, keywords.length)];
-let sb_form_q = document.getElementById("sb_form_q")
+let search_icon = document.getElementById("search_icon")
 let links = document.links;
 
-if(sb_form_go !== undefined) {
+if(search_icon !== null) {
   document.getElementById("sb_form_q").value = keyword;
-  sb_form_go.click();
+  search_icon.click();
 } else {
 
   for (let i = 0; i < links.length; i++) {
@@ -32,3 +32,4 @@ if(sb_form_go !== undefined) {
 
 function getRandom(min, max) {
   return Math.floor(Math.random()*(max - min) + min);
+}
