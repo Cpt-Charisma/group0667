@@ -1,33 +1,75 @@
 // ==UserScript==
 // @name         BingBot
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Bot for Bing
 // @author       Konstantin Chemodurov
 // @match        https://www.bing.com/*
+// @match        https://napli.ru/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        none
 // ==/UserScript==
 
-let keywords = ["10 самых популярных шрифтов от Google", "Отключение редакций и ревизий в WordPress", "Вывод произвольных типов записей и полей в WordPress", "Взаимодействие PHP и MySQL. Подключение к базе данных MySQL"];
+let keywords = ["10 самых популярных шрифтов от Google", "Отключение редакций и ревизий в WordPress",
+"Вывод произвольных типов записей и полей в WordPress", "Взаимодействие PHP и MySQL.", "Плагины VS Сode", "DevTools — очень полезная штука"];
 let keyword = keywords[getRandom(0, keywords.length)];
 let search_icon = document.getElementById("search_icon")
 let links = document.links;
+let BingInput = document.getElementById("sb_form_q")
+let next = document.getElementsByClassName("sb_pagN")[0]
 
 if(search_icon !== null) {
-  document.getElementById("sb_form_q").value = keyword;
+let i = 0;
+let timerId = setInterval(()=> {
+  BingInput.value += keyword[i];
+  i++;
+  if (i == keyword.length) {
+  clearInterval(timerId);
+  setTimeout(()=>{
   search_icon.click();
-} else {
+       }, getRandom(200, 500));
+    }
+  }, 300);
 
-  for (let i = 0; i < links.length; i++) {
+} else if (location.hostname == 'napli.ru') { //проверяем на целевом ли мы сайте
+setInterval(()=>{
+let index = getRandom(0, links.length);
+if (getRandom(0, 101) >= 80) {
+location.href = 'https://www.bing.com/';
+}
+if (links.length == 0) {
+location.href = 'napli.ru';
+}
+if (links[index].href.indexOf("napli.ru") !== -1) {
+links[index].click();
+}
+}, getRandom(3000, 5000));
+console.log('мы на целевом сайте');
+
+} else { //если мы не нацелом сайте, а на страницах поисковой выдачи
+  let nextBingPage = true; //флаг говорит, надо ли идти дальше в поисковой выдаче
+  for (let i = 0; i < links.length; i++) { //перебираем ссылки в цикле
     if (links[i].href.indexOf("napli.ru") !== -1) {
       let link = links[i];
-      console.log("Нашел строку " + link[i]);
-      link.click();
+      nextBingPage = false;
+      console.log("Нашел строку " + link);
+      setTimeout(()=>{
+        link.click();
+      }, getRandom(1500, 4000));
       break;
     }
+  } //конец цикла, где ищем целевой сайт в выдаче
+  if (document.getElementsByClassName("b_widePag")[4].innerText == "5") { //если не нашли в выдаче целевой сайт, ищем до 5 страницы
+  nextBingPage = false;
+  location.href = 'https://www.bing.com/';
+  }
+  if (nextBingPage) { //кликаем по каждой странице выдачи
+    setTimeout(()=>{
+      next.click();
+    }, getRandom(2000, 5000));
   }
 }
+
 
 
 function getRandom(min, max) {
