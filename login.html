@@ -39,7 +39,7 @@
       <div class="col-lg-6">
         <div class="login_form_inner">
           <h3>Авторизуйтесь чтобы войти</h3>
-          <form class="row login_form" action="#/" id="contactForm">
+          <form class="row login_form" onsubmit="sendForm(this); return false;">
             <div class="col-md-12 form-group">
               <input
                 type="email"
@@ -88,7 +88,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Авторизация прошла успешно</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Авторизация</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
