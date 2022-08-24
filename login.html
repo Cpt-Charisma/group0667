@@ -102,6 +102,7 @@
 
 <script>
 	async function sendForm(form) {
+    let formData = new FormData(form);
 		let response = await fetch("authUser", {
 			method: "POST",
 			body: formData,
@@ -110,8 +111,8 @@
 		if (res.result == "exist") {
 			$('#myModal').modal('show');
 			setTimeout(()=>{
-				location.href = "users";
-			}, 3000)
+				location.href = "/users/profile";
+			},3000)
 		}else if (res.result == "noFound"){
 			info.innerText = "Такого пользователя нет!";
 		}
