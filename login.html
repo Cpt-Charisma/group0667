@@ -1,0 +1,120 @@
+<!-- ================ start banner area ================= -->
+<section class="blog-banner-area" id="category">
+  <div class="container h-100">
+    <div class="blog-banner">
+      <div class="text-center">
+        <h1>Вход / Регистрация</h1>
+        <nav aria-label="breadcrumb" class="banner-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Главня</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Вход/Регистрация
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================ end banner area ================= -->
+
+<!--================Login Box Area =================-->
+<section class="login_box_area section-margin">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="login_box_img">
+          <div class="hover">
+            <h4>Впервые на нашем сайте?</h4>
+            <p>
+              Ежедневно в науке и технике делаются успехи, и хорошим примером
+              этого является
+            </p>
+            <a class="button button-account" href="register.html"
+              >Создать аккаунт</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="login_form_inner">
+          <h3>Авторизуйтесь чтобы войти</h3>
+          <form class="row login_form" action="#/" id="contactForm">
+            <div class="col-md-12 form-group">
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                placeholder="Username"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'email'"
+              />
+            </div>
+            <p class="col-md-12 form-group" id="info" style="color: red"></p>
+            <div class="col-md-12 form-group">
+              <input
+                type="password"
+                class="form-control"
+                name="pass"
+                placeholder="Пароль"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Пароль'"
+              />
+            </div>
+            <div class="col-md-12 form-group">
+              <div class="creat_account">
+                <input type="checkbox" id="f-option2" name="selector" />
+                <label for="f-option2">оставить меня залогиненным</label>
+              </div>
+            </div>
+            <div class="col-md-12 form-group">
+              <button
+                type="submit"
+                value="submit"
+                class="button button-login w-100"
+              >
+                Вход
+              </button>
+              <a href="#">Забыли пароль?</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--================End Login Box Area =================-->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Авторизация прошла успешно</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Авторизация прошла успешно
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+	async function sendForm(form) {
+		let response = await fetch("authUser", {
+			method: "POST",
+			body: formData,
+		});
+		let res = await response.json();
+		if (res.result == "exist") {
+			$('#myModal').modal('show');
+			setTimeout(()=>{
+				location.href = "users";
+			}, 3000)
+		}else if (res.result == "noFound"){
+			info.innerText = "Такого пользователя нет!";
+		}
+
+	}
+</script>
